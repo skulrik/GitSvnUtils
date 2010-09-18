@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#######################################################################
+# This script is useful when the command "git svn fetch" fetch nothing
+# and exit with this message:
+#
+# W: Ignoring error from SVN, path probably does not exist: (160013): Filesystem has no item: File not found: revision 0, path '<project_name>'
+# W: Do not be alarmed at the above message git-svn is just searching aggressively for old history.
+# This may take a while on large repositories
+#######################################################################
+
+# Read the current fetched svn revision number
+SVN_BASE_REVISION=`git svn info 2>/dev/null |grep "Revision:" |cut -d' ' -f2`
+
+# If no revision was found, use 1
+if [ -z "$SVN_BASE_REVISION" ]; then SVN_BASE_REVISION=1; fi
+
+# Get the latest revision from the svn url
+SVN_REPOSITORY_ROOT=`git config --get svn-remote.svn.url`
+SVN_FETCH=`git config --get svn-remote.svn.fetch |cut -d':' -f1 |cut -d'/' -f1`
+SVN_REPOSITORY=${SVN_REPOSITORY_ROOT}/${SVN_FETCH}
+SVN_HEAD_REVISION=`svn info ${SVN_REPOSITORY} |grep "Revision:" |cut -d ' ' -f2`
+
+# Verify that the latest revision is higher than the current one
+if [ "${SVN_HEAD_REVISION}" -le "${SVN_BASE_REVISION}" ]; then echo "Nothing to fetch. (Current: ${SVN_HEAD_REVISION}, Latest: ${SVN_BASE_REVISION})"; exit 1; fi
+
+# Run git svn fetch with a range
+echo "Running git svn fetch -r ${SVN_BASE_REVISION}:${SVN_HEAD_REVISION}"
+git svn fetch -r${SVN_BASE_REVISION}:${SVN_HEAD_REVISION}
+if [ "$?" -ne 0 ]; then echo "command failed"; exit 1; fi
