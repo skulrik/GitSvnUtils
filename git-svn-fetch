@@ -22,7 +22,7 @@ SVN_REPOSITORY=${SVN_REPOSITORY_ROOT}/${SVN_FETCH}
 SVN_HEAD_REVISION=`svn info ${SVN_REPOSITORY} |grep "Revision:" |cut -d ' ' -f2`
 
 # Verify that the latest revision is higher than the current one
-if [ "${SVN_HEAD_REVISION}" -le "${SVN_BASE_REVISION}" ]; then echo "Nothing to fetch. (Current: ${SVN_HEAD_REVISION}, Latest: ${SVN_BASE_REVISION})"; exit 1; fi
+if [ "${SVN_HEAD_REVISION}" -le "${SVN_BASE_REVISION}" ]; then echo "Nothing to fetch. (Current: ${SVN_BASE_REVISION}, Latest: ${SVN_HEAD_REVISION})"; exit 1; fi
 
 # Run git svn fetch with a range
 echo "Running git svn fetch -r ${SVN_BASE_REVISION}:${SVN_HEAD_REVISION}"
