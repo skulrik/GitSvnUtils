@@ -1,0 +1,42 @@
+---------------------------------------------------------------------
+Introduction
+---------------------------------------------------------------------
+
+This script is useful when the command "git svn fetch" fetch nothing and exit with this message:
+
+W: Ignoring error from SVN, path probably does not exist: (160013): Filesystem has no item: File not found: revision 0, path '<project_name>'
+W: Do not be alarmed at the above message git-svn is just searching aggressively for old history.
+This may take a while on large repositories
+
+---------------------------------------------------------------------
+Installation
+---------------------------------------------------------------------
+
+Just run the command
+
+make install
+
+to install the script in the default location (/usr/bin) or
+
+make PREFIX=install_dir install
+
+to install it in install_dir/bin.  For example
+
+make PREFIX=/home/user install
+
+will install the script in /home/user/bin
+
+---------------------------------------------------------------------
+Usage
+---------------------------------------------------------------------
+
+To use the script, make sure it is in your PATH, and instead of typing
+
+git svn fetch
+
+to fetch the new revision from the subversion repository, type
+
+git-svn-fetch
+
+Enjoy !
+
