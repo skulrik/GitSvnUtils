@@ -1,0 +1,12 @@
+#!/bin/sh
+
+echo "Stahsing local changes."
+git stash
+
+echo "Fetching latest commit from the svn repository."
+git svn fetch
+git svn rebase
+
+echo "Reapplying local change to source from the stash."
+git stash pop
+
