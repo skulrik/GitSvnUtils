@@ -2,11 +2,13 @@
 Introduction
 ---------------------------------------------------------------------
 
-This script is useful when the command "git svn fetch" fetch nothing and exit with this message:
 
-W: Ignoring error from SVN, path probably does not exist: (160013): Filesystem has no item: File not found: revision 0, path '<project_name>'
-W: Do not be alarmed at the above message git-svn is just searching aggressively for old history.
-This may take a while on large repositories
+This is a set of scripts that help to work with the git-svn plugin,
+It is composed of three scripts:
+
+   * git-svn-fetch
+   * git-svn-rebase
+   * git-svn-dcommit
 
 ---------------------------------------------------------------------
 Installation
@@ -27,8 +29,34 @@ make PREFIX=/home/user install
 will install the script in /home/user/bin
 
 ---------------------------------------------------------------------
-Usage
+git-svn-dcommit
 ---------------------------------------------------------------------
+
+This script allow to push local commited modification to the svn repository, even if we have local changes to the working directory and/or the index.
+The local changes are pushed to the stash before the dcommit action, and re-applied after it.
+
+Usage:
+
+To use the script, make sure it is in your PATH, and instead of typing
+
+git svn dcommit
+
+to push local commited modification to the svn repository, type
+
+git-svn-dcommit
+
+
+---------------------------------------------------------------------
+git-svn-fetch
+---------------------------------------------------------------------
+
+This script is useful when the command "git svn fetch" fetch nothing and exit with this message:
+
+W: Ignoring error from SVN, path probably does not exist: (160013): Filesystem has no item: File not found: revision 0, path '<project_name>'
+W: Do not be alarmed at the above message git-svn is just searching aggressively for old history.
+This may take a while on large repositories
+
+Usage:
 
 To use the script, make sure it is in your PATH, and instead of typing
 
@@ -37,6 +65,25 @@ git svn fetch
 to fetch the new revision from the subversion repository, type
 
 git-svn-fetch
+
+
+---------------------------------------------------------------------
+git-svn-rebase
+---------------------------------------------------------------------
+
+This script allow to pull remote modification from the svn repository, to our local repository even if we have local changes to the working directory and/or the index.
+The local changes are pushed to the stash before the rebase action, and re-applied after it.
+
+Usage:
+
+To use the script, make sure it is in your PATH, and instead of typing
+
+git svn rebase
+
+to pull remote modification from the svn repository, type
+
+git-svn-rebase
+
 
 Enjoy !
 
